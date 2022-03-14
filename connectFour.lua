@@ -1,6 +1,6 @@
 local ROW_COUNT = 6
 local COLUMN_COUNT = 7
-local IN_A_ROW = 5
+local IN_A_ROW = 4
 
 local function createBoard(rows, columns)
     local board = {}
@@ -135,7 +135,7 @@ while not gameOver do
     if turn then turnNum = 1 else turnNum = 2 end
     local turnOver = false
     while not turnOver do
-        print("PLAYER "..turnNum.."'s turn\nPick a column [1-"..COLUMN_COUNT.."] to place your piece ["..turnNum.."] into.")
+        print("PLAYER "..turnNum.."'s turn\nPick a column [1-"..COLUMN_COUNT.."] to place your piece ["..turnNum.."] into. ("..IN_A_ROW.." PIECES IN A ROW NEEDED TO WIN) ")
         local pickedColumn = tonumber(io.read())
         if getDropCoordinate(gameBoard, pickedColumn, ROW_COUNT) then
             turnOver = true
