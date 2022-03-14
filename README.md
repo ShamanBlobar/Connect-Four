@@ -1,4 +1,4 @@
-# Connect-Four
+# Connect Four 🔴🟡
 Command line version of tabletop game Connect Four. Made in Lua.
 
 ![image](https://user-images.githubusercontent.com/89071033/158216675-1784d74b-429d-4ff0-8c80-7a29db8462f5.png)
