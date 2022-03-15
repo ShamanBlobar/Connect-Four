@@ -2,6 +2,11 @@ local ROW_COUNT = 6
 local COLUMN_COUNT = 7
 local IN_A_ROW = 4
 
+local clearCommand = "cls"
+if not os.execute(clearCommand) then
+    clearCommand = "clear"
+end
+
 local function createBoard(rows, columns)
     local board = {}
     for _=1, rows do
