@@ -19,7 +19,7 @@ local function createBoard(rows, columns)
     end
     return board
 end
-while true do end
+
 local function printBoard(board)
     local res = ""
     for _, row in pairs(board) do
