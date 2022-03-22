@@ -2,11 +2,12 @@ local ROW_COUNT = 6
 local COLUMN_COUNT = 7
 local IN_A_ROW = 4
 
-local clearCommand = "cls"
+local clearCommand = "clear"
 if not os.execute(clearCommand) then
-    clearCommand = "clear"
+    clearCommand = "cls"
 end
 
+print(clearCommand)
 local function createBoard(rows, columns)
     local board = {}
     for _=1, rows do
@@ -18,7 +19,7 @@ local function createBoard(rows, columns)
     end
     return board
 end
-
+while true do end
 local function printBoard(board)
     local res = ""
     for _, row in pairs(board) do
@@ -135,7 +136,7 @@ local turn = true
 local turnNum = 1
 
 while not gameOver do
-    os.execute("cls")
+    os.execute(clearCommand)
     printBoard(gameBoard)
     if turn then turnNum = 1 else turnNum = 2 end
     local turnOver = false
@@ -152,7 +153,7 @@ while not gameOver do
                 gameOver = true
             end
         else
-            os.execute("cls")
+            os.execute(clearCommand)
             printBoard(gameBoard)
             print("You can't place a piece here.")
         end
@@ -163,6 +164,6 @@ while not gameOver do
     turn = not turn
 end
 
-os.execute("cls")
+os.execute(clearCommand)
 printBoard(gameBoard)
 print(outcome)
