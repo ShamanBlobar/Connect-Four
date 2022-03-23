@@ -7,7 +7,6 @@ if not os.execute(clearCommand) then
     clearCommand = "cls"
 end
 
-print(clearCommand)
 local function createBoard(rows, columns)
     local board = {}
     for _=1, rows do
@@ -98,23 +97,29 @@ local function verticalSearch(board, column, symbol, required)
     return false
 end
 
-local function diagonalSearch(board, column, depth, symbol, required)
-    local inRow = 1
+local function diagonalSearch(board, pivotColumn, pivotRow, symbol, required)
     local function add(a, b) return a+b end
     local function sub(a, b) return a-b end
-    local operatorOrder = {{add, add}, {sub, sub}, {add, sub}, {sub, add}}
-    for o=1, 4 do
+    local opTable = {{sub, sub}, {add, add}, {sub, add}, {add, sub}}
+    local inRow = 1
+
+    for op, _ in ipairs(opTable) do
         for i=1, required*2 do
-            if board[operatorOrder[o][1](depth, i)] and board[operatorOrder[o][2](column, i)] then
-                if board[operatorOrder[o][1](depth, i)][operatorOrder[o][2](column, i)] == symbol then
+            if board[opTable[op][1](pivotRow, i)] and board[opTable[op][2](pivotColumn, i)] then
+                if inRow >= required then
+                    print(opTable[op][1](2, 2), opTable[op][2](2, 2))
+                    return true
+                elseif board[opTable[op][1](pivotRow, i)][opTable[op][2](pivotColumn, i)] == symbol then
                     inRow = inRow + 1
-                    if inRow == required then
-                        return true
-                    end
                 else
                     inRow = 1
                 end
+            else
+                inRow = 1
             end
+        end
+        if op == 3 then
+            inRow = 1
         end
     end
     return false
@@ -148,7 +153,6 @@ while not gameOver do
             local dep, col = getDropCoordinate(gameBoard, pickedColumn, ROW_COUNT)
             dropPiece(gameBoard, dep, col, turn)
             if isWon(gameBoard, dep, col, turn, IN_A_ROW) then
-
                 outcome = "PLAYER "..turnNum.." WINS!"
                 gameOver = true
             end
