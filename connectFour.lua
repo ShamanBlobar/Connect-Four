@@ -100,28 +100,29 @@ end
 local function diagonalSearch(board, pivotColumn, pivotRow, symbol, required)
     local function add(a, b) return a+b end
     local function sub(a, b) return a-b end
-    local opTable = {{sub, sub}, {add, add}, {sub, add}, {add, sub}}
+    local opTable = {{sub, sub}, {add, add}, {add, sub}, {sub, add}}
     local inRow = 1
 
     for op, _ in ipairs(opTable) do
         for i=1, required*2 do
-            if board[opTable[op][1](pivotRow, i)] and board[opTable[op][2](pivotColumn, i)] then
-                if inRow >= required then
-                    print(opTable[op][1](2, 2), opTable[op][2](2, 2))
-                    return true
-                elseif board[opTable[op][1](pivotRow, i)][opTable[op][2](pivotColumn, i)] == symbol then
-                    inRow = inRow + 1
-                else
-                    inRow = 1
+            if board[opTable[op][1](pivotRow, i)] then
+                if board[opTable[op][1](pivotRow, i)][opTable[op][2](pivotColumn, i)] then
+                    if board[opTable[op][1](pivotRow, i)][opTable[op][2](pivotColumn, i)] == symbol then
+                        inRow = inRow + 1
+                        if inRow >= required then
+                            return true
+                        end
+                    else
+                        break
+                    end
                 end
-            else
-                inRow = 1
             end
         end
-        if op == 3 then
+        if op == #opTable/2 then
             inRow = 1
         end
     end
+    
     return false
 end
 
